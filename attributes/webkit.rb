@@ -19,7 +19,7 @@
 
 default["lightdm"]["webkit"]["packages"] = %w(
   lightdm-webkit-greeter
-  lightdm-webkit-greeter-branding-beever
+  lightdm-webkit-greeter-branding-bevel
 )
 
 default["lightdm"]["webkit"]["config_file"] = "/etc/lightdm/lightdm-webkit-greeter.conf"
