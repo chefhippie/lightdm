@@ -17,6 +17,19 @@
 # limitations under the License.
 #
 
+case node["platform_family"]
+when "suse"
+  include_recipe "zypper"
+
+  zypper_repository node["lightdm"]["zypper"]["alias"] do
+    uri node["lightdm"]["zypper"]["repo"]
+    key node["lightdm"]["zypper"]["key"]
+    title node["lightdm"]["zypper"]["title"]
+
+    action :add
+  end
+end
+
 node["lightdm"]["packages"].each do |name|
   package name do
     action :install

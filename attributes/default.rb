@@ -41,3 +41,8 @@ default["lightdm"]["minimum_uid"] = 1000
 default["lightdm"]["hidden_users"] = %w(nobody)
 default["lightdm"]["hidden_shells"] = %w(/bin/false /sbin/nologin)
 default["lightdm"]["keyrings"] = {}
+
+default["lightdm"]["zypper"]["alias"] = "x11-utilities"
+default["lightdm"]["zypper"]["title"] = "X11 Utilities"
+default["lightdm"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/X11:/Utilities/openSUSE_#{node["platform_version"]}/"
+default["lightdm"]["zypper"]["key"] = "#{node["lightdm"]["zypper"]["repo"]}repodata/repomd.xml.key"
