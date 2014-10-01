@@ -47,17 +47,8 @@ else
   end
 end
 
-template node["lightdm"]["config_file"] do
-  source "lightdm.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-
-  variables(
-    node["lightdm"]
-  )
-
-  notifies :restart, "service[lightdm]"
+file node["lightdm"]["config_file"] do
+  action :delete
 end
 
 template node["lightdm"]["keys_file"] do
@@ -69,8 +60,6 @@ template node["lightdm"]["keys_file"] do
   variables(
     node["lightdm"]
   )
-
-  notifies :restart, "service[lightdm]"
 end
 
 template node["lightdm"]["users_file"] do
@@ -82,8 +71,6 @@ template node["lightdm"]["users_file"] do
   variables(
     node["lightdm"]
   )
-
-  notifies :restart, "service[lightdm]"
 end
 
 template node["lightdm"]["sysconfig_file"] do
@@ -95,8 +82,6 @@ template node["lightdm"]["sysconfig_file"] do
   variables(
     node["lightdm"]
   )
-
-  notifies :restart, "service[lightdm]"
 end
 
 service "lightdm" do
