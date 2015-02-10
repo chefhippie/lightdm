@@ -27,6 +27,10 @@ when "suse"
     title node["lightdm"]["zypper"]["title"]
 
     action :add
+
+    only_if do
+      node["lightdm"]["zypper"]["enabled"]
+    end
   end
 end
 
@@ -43,7 +47,7 @@ when "gtk"
   include_recipe "lightdm::gtk"
 else
   log "Unknown greeter name for lightdm" do
-    level :fatal    
+    level :fatal
   end
 end
 
@@ -64,17 +68,6 @@ end
 
 template node["lightdm"]["users_file"] do
   source "users.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-
-  variables(
-    node["lightdm"]
-  )
-end
-
-template node["lightdm"]["sysconfig_file"] do
-  source "sysconfig.conf.erb"
   owner "root"
   group "root"
   mode 0644
