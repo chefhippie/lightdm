@@ -32,8 +32,22 @@ default["lightdm"]["hidden_users"] = %w(nobody)
 default["lightdm"]["hidden_shells"] = %w(/bin/false /sbin/nologin)
 default["lightdm"]["keyrings"] = {}
 
-default["lightdm"]["zypper"]["enabled"] = true
-default["lightdm"]["zypper"]["alias"] = "x11-utilities"
-default["lightdm"]["zypper"]["title"] = "X11 Utilities"
-default["lightdm"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/X11:/Utilities/openSUSE_#{node["platform_version"]}/"
-default["lightdm"]["zypper"]["key"] = "#{node["lightdm"]["zypper"]["repo"]}repodata/repomd.xml.key"
+case node["platform_family"]
+when "suse"
+  repo = case node["platform_version"]
+  when /\A13\.\d+\z/
+    "openSUSE_#{node["platform_version"]}"
+  when /\A42\.\d+\z/
+    "openSUSE_Leap_#{node["platform_version"]}"
+  when /\A\d{8}\z/
+    "openSUSE_Factory"
+  else
+    raise "Unsupported SUSE version"
+  end
+
+  default["lightdm"]["zypper"]["enabled"] = true
+  default["lightdm"]["zypper"]["alias"] = "x11-utilities"
+  default["lightdm"]["zypper"]["title"] = "X11 Utilities"
+  default["lightdm"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/X11:/Utilities/#{repo}/"
+  default["lightdm"]["zypper"]["key"] = "#{node["lightdm"]["zypper"]["repo"]}repodata/repomd.xml.key"
+end
